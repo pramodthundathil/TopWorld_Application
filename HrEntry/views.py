@@ -1,0 +1,234 @@
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate,login,logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+from .models import JobList,JobApplication
+
+# admin user authentication and logout--------------------------------------
+
+def Signin(request):
+    if request.method  == 'POST':
+        username = request.POST['uname']
+        password = request.POST['pswd']
+        user1 = authenticate(request, username = username , password = password)
+        
+        if user1 is not None:
+            
+            request.session['username'] = username
+            request.session['password'] = password
+            login(request, user1)
+            return redirect('AdminHome')
+        
+        else:
+            messages.info(request,'Username or Password Incorrect')
+            return redirect('Signin')
+    return render(request,'login.html')
+
+def Signout(request):
+    
+    logout(request)
+    return redirect('Index')
+
+
+#=======================ADMIN===============================================
+
+# administrator Home screen rendering------------------------------------------
+
+@login_required(login_url="Signin")
+def AdminHome(request):
+    AllJobs = JobList.objects.all()
+    Applications = JobApplication.objects.all()
+    
+    context = {
+        'Alljobs':AllJobs,
+        'NoofJobs':len(AllJobs),
+        "applications":Applications,
+        "nofappli":len(Applications),
+        
+    }
+    return render(request,"admin.html",context)
+
+
+# Admin Job list handling and new job adding----------------------------------- 
+
+@login_required(login_url="Signin")
+def AdminJobList(request):
+    
+    AllJobs = JobList.objects.all()
+    Applications = JobApplication.objects.all()
+    
+    context = {
+        'Alljobs':AllJobs,
+        'NoofJobs':len(AllJobs),
+        "nofappli":len(Applications),
+        
+    }
+    
+    return render(request,'joblist.html',context)
+
+# admin Job Add Function---------------------------------------------------------------
+
+@login_required(login_url="Signin")
+def AddJob(request):
+    if request.method == 'POST':
+        
+        JobTitle = request.POST["jtitle"]
+        Skills = request.POST["skills"]
+        CompanyName = request.POST["company"]
+        Salary = request.POST["salary"]
+        Discription = request.POST["dis"]
+        Qualification = request.POST["qlif"]
+        WorkTime = request.POST['workt']
+        
+        NewJob = JobList.objects.create(JobTitle = JobTitle,CompanyName = CompanyName,Salary = Salary,Skills = Skills,Qualification = Qualification,WorkTime = WorkTime,Discription = Discription)
+        NewJob.save()
+        
+        messages.success(request,"New Job Added To the List")
+        return redirect("AdminJobList")
+        
+    return redirect("AdminJobList")
+
+@login_required(login_url="Signin")
+def UpdateJob(request,pk):
+    myjob = JobList.objects.filter(JobID = pk)
+    context = {
+        'myjob':myjob
+    }
+    
+    if request.method == "POST":
+        
+        JobTitle = request.POST["jobtitle"]
+        CompanyName = request.POST["company"]
+        Salary = request.POST["salary"]
+        Skills = request.POST["skills"]
+        Qualification = request.POST["qualification"]
+        WorkTime = request.POST["worktime"]
+        Discription = request.POST["discription"]
+        
+        myjob = JobList.objects.get(JobID = pk)
+        myjob.JobTitle = JobTitle
+        myjob.CompanyName = CompanyName
+        myjob.Salary = Salary
+        myjob.Skills = Skills
+        myjob.Qualification = Qualification
+        myjob.WorkTime = WorkTime
+        myjob.Discription = Discription
+        myjob.save()
+        messages.info(request,"Job Updated")
+        return redirect("AdminJobView",pk = pk)
+        
+    return render(request,"editjob.html",context)
+
+@login_required(login_url="Signin")
+def DeleteJob(request,pk):
+    MyJob = JobList.objects.get(JobID = pk)
+    MyJob.delete()
+    return redirect("AdminHome")
+
+# Jobapplication Handling-------------------------------------------------------------
+
+@login_required(login_url="Signin")
+def AdminJobApplicationList(request):
+    
+    Applications = JobApplication.objects.all()
+    AllJobs = JobList.objects.all()
+    context = {
+        "applications":Applications,
+        'NoofJobs':len(AllJobs),
+        "nofappli":len(Applications),     
+    }
+    
+    return render(request,"jobapplicationlist.html",context)
+
+@login_required(login_url="Signin")
+def AdminJobView(request,pk):
+    MyJob = JobList.objects.filter(JobID = pk)
+    application = JobApplication.objects.filter(Jobid = pk)
+    context = {
+        'MyJob':MyJob,
+        'applications':application,
+        'appicantnum':len(application)
+    }
+    return render(request,"AdminJobView.html",context)
+
+@login_required(login_url="Signin")
+def ApplicantView(request,pk):
+    application = JobApplication.objects.filter(ApplicationID = pk)
+    
+    context = {
+        "application":application,
+    }
+    
+    return render(request,"applicantview.html",context)
+
+@login_required(login_url="Signin")
+def DeleteApplicant(request,pk):
+    applicant = JobApplication.objects.get(ApplicationID = pk)
+    applicant.Document.delete()
+    applicant.delete()
+    return redirect('AdminHome')
+
+
+
+#======================================================================================
+
+#User funtions------------------------------------------------------------------------
+
+# index page Rendering---------------------------------------------------------
+
+def Index(request):
+    AllJobs = JobList.objects.all()
+    context = {
+        'Alljobs':AllJobs
+    }
+    return render(request,'index.html',context)
+
+def AboutPage(request):
+    return render(request,"about.html")
+
+def Contact(request):
+    return render(request,"contact.html")
+
+def Services(request):
+    return render(request,"services.html")
+
+def AllJobs(request):
+    Alljobs = JobList.objects.all()
+    context = {
+        "Alljobs":Alljobs
+    }
+    return render (request,"alljobs.html",context)
+
+def JobView(request,pk):
+    
+    MyJob = JobList.objects.filter(JobID = pk)
+    
+    if request.method == "POST":
+        
+        FirstName = request.POST["fname"]
+        LastName = request.POST["lname"]
+        JobTitle = request.POST["jobtitle"]
+        PhoneNumber = request.POST["phone"]
+        EmailId = request.POST["email"]
+        Doc = request.FILES['document']
+        Jobid = request.POST['jobid']
+        
+        JobId = JobList.objects.get(JobID = Jobid)
+        
+        Application = JobApplication.objects.create(Jobid = JobId,JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
+        Application.save()
+        
+        messages.info(request,"Job Applied Succesfully")
+        return redirect('JobView',pk=Jobid)
+        
+    return render(request,"jobview.html",{"MyJob":MyJob})
+
+def ApplyJob(request):
+    
+    pass
+
+
+
+
+    
