@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import JobList,JobApplication
+from .models import JobList,JobApplication,DropedResume,EmployersMessage
 
 # admin user authentication and logout--------------------------------------
 
@@ -39,12 +39,19 @@ def Signout(request):
 def AdminHome(request):
     AllJobs = JobList.objects.all()
     Applications = JobApplication.objects.all()
+    DropedResumes = DropedResume.objects.all()
+    emessage = EmployersMessage.objects.all()
+    
     
     context = {
         'Alljobs':AllJobs,
         'NoofJobs':len(AllJobs),
         "applications":Applications,
         "nofappli":len(Applications),
+        'noofdropresume':len(DropedResumes),
+        "DropedResumes":DropedResumes,
+        'noofemployers':len(emessage),
+        "emessage":emessage,
         
     }
     return render(request,"admin.html",context)
@@ -80,8 +87,10 @@ def AddJob(request):
         Discription = request.POST["dis"]
         Qualification = request.POST["qlif"]
         WorkTime = request.POST['workt']
+        Experiance = request.POST["experiance"]
+        Location = request.POST["location"]
         
-        NewJob = JobList.objects.create(JobTitle = JobTitle,CompanyName = CompanyName,Salary = Salary,Skills = Skills,Qualification = Qualification,WorkTime = WorkTime,Discription = Discription)
+        NewJob = JobList.objects.create(JobTitle = JobTitle,CompanyName = CompanyName,Salary = Salary,Skills = Skills,Qualification = Qualification,WorkTime = WorkTime,Experiance=Experiance,WorkLocation=Location,Discription = Discription)
         NewJob.save()
         
         messages.success(request,"New Job Added To the List")
@@ -105,6 +114,8 @@ def UpdateJob(request,pk):
         Qualification = request.POST["qualification"]
         WorkTime = request.POST["worktime"]
         Discription = request.POST["discription"]
+        Experiance = request.POST["experiance"]
+        Location = request.POST["location"]
         
         myjob = JobList.objects.get(JobID = pk)
         myjob.JobTitle = JobTitle
@@ -114,6 +125,8 @@ def UpdateJob(request,pk):
         myjob.Qualification = Qualification
         myjob.WorkTime = WorkTime
         myjob.Discription = Discription
+        myjob.Experiance = Experiance
+        myjob.WorkLocation = Location
         myjob.save()
         messages.info(request,"Job Updated")
         return redirect("AdminJobView",pk = pk)
@@ -133,10 +146,14 @@ def AdminJobApplicationList(request):
     
     Applications = JobApplication.objects.all()
     AllJobs = JobList.objects.all()
+    DropedResumes = DropedResume.objects.all()
+    
     context = {
         "applications":Applications,
         'NoofJobs':len(AllJobs),
-        "nofappli":len(Applications),     
+        "nofappli":len(Applications),
+        'DropedResumes':DropedResumes,
+             
     }
     
     return render(request,"jobapplicationlist.html",context)
@@ -163,11 +180,42 @@ def ApplicantView(request,pk):
     return render(request,"applicantview.html",context)
 
 @login_required(login_url="Signin")
+def RegApplicantView(request,pk):
+    application = DropedResume.objects.filter(ApplicationID = pk)
+    
+    context = {
+        "application":application,
+    }
+    
+    return render(request,"Dropedapplication.html",context)
+
+@login_required(login_url="Signin")
 def DeleteApplicant(request,pk):
     applicant = JobApplication.objects.get(ApplicationID = pk)
     applicant.Document.delete()
     applicant.delete()
     return redirect('AdminHome')
+
+@login_required(login_url="Signin")
+def DeleteDropApplicant(request,pk):
+    applicant = DropedResume.objects.get(ApplicationID = pk)
+    applicant.Document.delete()
+    applicant.delete()
+    return redirect('AdminHome')
+
+#Employers message Handling----------------------------------------------------------
+@login_required(login_url="Signin")
+def EmployersMessageView(request):
+    emessage = EmployersMessage.objects.all()
+    context = {
+        "emessage":emessage
+    }
+    return render(request,"employersmsg.html",context)
+
+@login_required(login_url="Signin")
+def EmployerMsgIndi(request,pk):
+    return render(request,"EmployersIndividualMessage.html")
+
 
 
 
@@ -200,6 +248,8 @@ def AllJobs(request):
     }
     return render (request,"alljobs.html",context)
 
+# Job View And Job Application-----------------------------------------------------
+
 def JobView(request,pk):
     
     MyJob = JobList.objects.filter(JobID = pk)
@@ -224,9 +274,40 @@ def JobView(request,pk):
         
     return render(request,"jobview.html",{"MyJob":MyJob})
 
+# Resume Drop--------------------------------------------------------------
+    
 def ApplyJob(request):
     
-    pass
+    if request.method == 'POST':
+        
+        FirstName = request.POST["fname"]
+        LastName = request.POST["lname"]
+        JobTitle = request.POST["jobtitle"]
+        PhoneNumber = request.POST["phone"]
+        EmailId = request.POST["email"]
+        Doc = request.FILES['doc']
+        
+        Application = DropedResume.objects.create(JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
+        Application.save()
+        
+        messages.success(request,"New Job Added To the List")
+        return redirect("Index")
+    
+def EMessage(request):
+    
+    if request.method == "POST":
+        
+        Organazation = request.POST["organazation"]
+        EmailId = request.POST["email"]
+        Phone = request.POST["phone"]
+        Message = request.POST["message"]
+        
+        emessage = EmployersMessage.objects.create(OrganasationName=Organazation,EmailID=EmailId,PhoneNumber=Phone,Message=Message)
+        emessage.save()
+        messages.success(request,"Request Sent")
+        return redirect("Index")
+        
+        
 
 
 
