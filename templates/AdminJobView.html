@@ -38,7 +38,7 @@
         </div>
     <button class="btn btn-dark" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">View Applicants</button>
     <a href="{%url 'UpdateJob' job.JobID %}" class="btn btn-dark">Edit Job</a>
-    <a href="{%url 'DeleteJob' job.JobID %}" onclick="alert('Your Data Was Deleted')" class="btn btn-dark">Delete Job</a>
+    <a href="{%url 'DeleteJob' job.JobID %}" onclick="alert('Your Data Was Deleted')" class="btn btn-danger">Delete Job</a>
     {% endfor %}
     
     
@@ -83,7 +83,7 @@
                         <td>{{application.Jobid.CompanyName}}</td>
                         <td>{{application.FirstName}} {{application.LastName}}</td>
                         <td>{{application.AppliedDate}}</td>
-                        <td><a href="{{application.Document.url}}" class="btn btn-primary">Download</a></td>
+                        <td><a href="{{application.Document.url}}" class="btn btn-primary" target="_blank">Download</a></td>
                         <td><a href="{%url 'ApplicantView' application.ApplicationID %}" class="btn btn-dark">VIEW</a></td>
                       </tr>
                       {%endfor%}

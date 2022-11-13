@@ -37,10 +37,10 @@ def Signout(request):
 
 @login_required(login_url="Signin")
 def AdminHome(request):
-    AllJobs = JobList.objects.all()
-    Applications = JobApplication.objects.all()
-    DropedResumes = DropedResume.objects.all()
-    emessage = EmployersMessage.objects.all()
+    AllJobs = JobList.objects.all().order_by('-PostedDate').values()
+    Applications = JobApplication.objects.all().order_by('-AppliedDate').values()
+    DropedResumes = DropedResume.objects.all().order_by('-AppliedDate').values()
+    emessage = EmployersMessage.objects.all().order_by('-EmpmassageID').values()
     
     
     context = {
@@ -144,9 +144,9 @@ def DeleteJob(request,pk):
 @login_required(login_url="Signin")
 def AdminJobApplicationList(request):
     
-    Applications = JobApplication.objects.all()
-    AllJobs = JobList.objects.all()
-    DropedResumes = DropedResume.objects.all()
+    Applications = JobApplication.objects.all().order_by('-AppliedDate').values()
+    AllJobs = JobList.objects.all().order_by('-PostedDate').values()
+    DropedResumes = DropedResume.objects.all().order_by('-AppliedDate').values()
     
     context = {
         "applications":Applications,
@@ -214,7 +214,17 @@ def EmployersMessageView(request):
 
 @login_required(login_url="Signin")
 def EmployerMsgIndi(request,pk):
-    return render(request,"EmployersIndividualMessage.html")
+    emessage = EmployersMessage.objects.filter(EmpmassageID = pk)
+    context = {
+        "emessage":emessage
+    }
+    return render(request,"EmployersIndividualMessage.html",context)
+
+@login_required(login_url="Signin")
+def DeleteEployersMsg(request,pk):
+    applicant = EmployersMessage.objects.get(EmpmassageID = pk)
+    applicant.delete()
+    return redirect('AdminHome')
 
 
 
@@ -226,7 +236,7 @@ def EmployerMsgIndi(request,pk):
 # index page Rendering---------------------------------------------------------
 
 def Index(request):
-    AllJobs = JobList.objects.all()
+    AllJobs = JobList.objects.all().order_by('-PostedDate').values()
     context = {
         'Alljobs':AllJobs
     }
@@ -242,7 +252,7 @@ def Services(request):
     return render(request,"services.html")
 
 def AllJobs(request):
-    Alljobs = JobList.objects.all()
+    Alljobs = JobList.objects.all().order_by('-PostedDate').values()
     context = {
         "Alljobs":Alljobs
     }
@@ -269,7 +279,7 @@ def JobView(request,pk):
         Application = JobApplication.objects.create(Jobid = JobId,JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
-        messages.info(request,"Job Applied Succesfully")
+        messages.info(request,"Job Application Submitted Successfully")
         return redirect('JobView',pk=Jobid)
         
     return render(request,"jobview.html",{"MyJob":MyJob})
@@ -290,7 +300,7 @@ def ApplyJob(request):
         Application = DropedResume.objects.create(JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
-        messages.success(request,"New Job Added To the List")
+        messages.success(request,"Your Application Submitted Successfully")
         return redirect("Index")
     
 def EMessage(request):

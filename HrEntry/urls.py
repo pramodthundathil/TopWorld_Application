@@ -30,6 +30,7 @@ urlpatterns = [
     
     path('EmployersMessageView',views.EmployersMessageView,name='EmployersMessageView'),
     path('EmployerMsgIndi/<int:pk>',views.EmployerMsgIndi,name="EmployerMsgIndi"),
+    path("DeleteEployersMsg/<int:pk>",views.DeleteEployersMsg,name="DeleteEployersMsg"),
     
     
 ]

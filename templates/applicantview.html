@@ -45,6 +45,8 @@
                 <h6>Salary: {{appli.Jobid.Salary}}</h6>
                 <h6>Working Time: {{appli.Jobid.WorkTime}}</h6>
                 <p>Job Posted On: {{appli.Jobid.PostedDate}}</p>
+            <a href="{%url 'AdminJobView' appli.Jobid.JobID%}" class="btn btn-dark">VIEW</a>
+
                 <!-- <a class="btn btn-primary rounded-pill py-3 px-5 me-3" href="">Find Doctor</a>
                     <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">Read More</a> -->
             </div>
