@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import JobList,JobApplication,DropedResume,EmployersMessage
+from django.conf import settings
 
 # admin user authentication and logout--------------------------------------
 
@@ -246,6 +247,10 @@ def AboutPage(request):
     return render(request,"about.html")
 
 def Contact(request):
+    if request.method == "POST":
+        messages.info(request,"We appreciate you contacting us. One of our colleagues will get back in touch with you soon! Have a great day!")
+        return redirect("Contact")
+        
     return render(request,"contact.html")
 
 def Services(request):
@@ -279,7 +284,7 @@ def JobView(request,pk):
         Application = JobApplication.objects.create(Jobid = JobId,JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
-        messages.info(request,"Job Application Submitted Successfully")
+        messages.info(request,"Thank you! Your job application has been sent!")
         return redirect('JobView',pk=Jobid)
         
     return render(request,"jobview.html",{"MyJob":MyJob})
@@ -300,7 +305,7 @@ def ApplyJob(request):
         Application = DropedResume.objects.create(JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
-        messages.success(request,"Your Application Submitted Successfully")
+        messages.success(request," Thank you! Your registration has been successfully completed!")
         return redirect("Index")
     
 def EMessage(request):
@@ -314,9 +319,14 @@ def EMessage(request):
         
         emessage = EmployersMessage.objects.create(OrganasationName=Organazation,EmailID=EmailId,PhoneNumber=Phone,Message=Message)
         emessage.save()
-        messages.success(request,"Request Sent")
+        messages.success(request,"Thank you for getting in touch, we will respond with in 2 business days")
         return redirect("Index")
         
+def error_404_view(request, exception):
+       
+    # we add the path to the the 404.html file
+    # here. The name of our HTML file is 404.html
+    return render(request, '404.html')
         
 
 
