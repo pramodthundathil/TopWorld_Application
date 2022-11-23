@@ -23,7 +23,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
     </script>
-
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -58,17 +57,6 @@
         .hovera a:hover {
             color: #13C5DD !important;
         }
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
     </style>
 </head>
 
@@ -88,7 +76,7 @@
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-body px-2" target="_blank" href="https://www.facebook.com/topworldhr/">
+                        <a class="text-body px-2" href="">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a class="text-body px-2" href="">
@@ -97,7 +85,7 @@
                         <a class="text-body px-2" href="">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a class="text-body px-2" target="_blank" href="https://www.instagram.com/topworldhr">
+                        <a class="text-body px-2" href="">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a class="text-body ps-2" href="">
@@ -154,18 +142,18 @@
                 <img src="{%static 'img/banner_new.jpg' %}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block"> -->
 
-    <!-- <h5>First slide label</h5>
+                    <!-- <h5>First slide label</h5>
               <p>Some representative placeholder content for the first slide.</p> -->
-    <!-- </div>
+                <!-- </div>
             </div> -->
-    <!-- <div class="carousel-item">
+            <!-- <div class="carousel-item">
                 <img src="{%static 'img/banner-hr2.jpg' %}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block"> -->
-    <!-- <h5>Second slide label</h5>
+                    <!-- <h5>Second slide label</h5>
               <p>Some representative placeholder content for the second slide.</p> -->
-    <!-- </div>
+                <!-- </div>
             </div> -->
-    <!-- <div class="carousel-item active">
+            <!-- <div class="carousel-item active">
                 <img src="{%static 'img/banner_new2.jpg' %}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     {% for message in messages%}
@@ -174,9 +162,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     {% endfor %} -->
-    <!-- <h5>Third slide label</h5>
+                    <!-- <h5>Third slide label</h5>
               <p>Some representative placeholder content for the third slide.</p> -->
-    <!-- </div>
+                <!-- </div>
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -209,49 +197,46 @@
     <!-- new hero carosel -->
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{%static 'img/banner_new2.jpg' %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    {% for message in messages%}
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Info!</strong> {{message}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    {% endfor %}
+          <div class="carousel-item active">
+            <img src="{%static 'img/banner_new2.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                {% for message in messages%}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Info!</strong> {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+                {% endfor %}
             </div>
-            <div class="carousel-item">
-                <img src="{%static 'img/banner-hr2.jpg' %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{%static 'img/banner-hr2.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
             </div>
-            <div class="carousel-item">
-                <img src="{%static 'img/banner_new.jpg' %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{%static 'img/banner_new.jpg' %}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
             </div>
+          </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
         </button>
-    </div>
+      </div>
 
-    <!-- end hero new -->
+      <!-- end hero new -->
+
+
 
     <!-- About Start -->
     <div class="container-fluid py-5" id="about">
@@ -432,14 +417,12 @@
 
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="tel" pattern="[0-9]{10,14}" title="Please enter valid phone number"
-                                        class="form-control bg-light border-0" placeholder="Phone Number" name="phone"
-                                        style="height: 55px;" required>
+                                    <input type="tel"  pattern="[+]{1}[0-9]{12,14}" title="Please enter the mobile number with specific country code(uae : +971xxxxxxxxx, India : +91xxxxxxxxxx, etc..)" class="form-control bg-light border-0"
+                                        placeholder="Phone Number" name="phone" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <input type="email" class="form-control bg-light border-0" name="email"
-                                        placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                                        style="height: 55px;" required>
+                                        placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <span style="font-size: 10px ;"> Upload Resume:(doc,pdf) </span>
@@ -552,22 +535,20 @@
                                         placeholder="Organazation Name" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="tel" pattern="[0-9]{10,14}" title="Please enter valid phone number"
-                                        name="phone" class="form-control bg-light border-0" placeholder="Contact Number"
-                                        required style="height: 55px;">
+                                    <input type="tel"  pattern="[+]{1}[0-9]{12,14}" title="Please enter the mobile number with specific country code(uae : +971xxxxxxxxx, India : +91xxxxxxxxxx, etc..)" name="phone" class="form-control bg-light border-0"
+                                        placeholder="Contact Number" required style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email"
-                                        class="form-control bg-light border-0" placeholder="Email" required
-                                        style="height: 55px;">
+                                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" class="form-control bg-light border-0"
+                                        placeholder="Email" required style="height: 55px;">
 
                                 </div>
 
                                 <div class="col-12 col-sm-12">
                                     <!-- <input type="text" name="message" class="form-control bg-light border-0"
                                         placeholder="Message" style="height: 55px;"> -->
-                                    <textarea type="text" name="message" required class="form-control bg-light border-0"
-                                        rows="5" placeholder="Message" style="resize: none !important;"></textarea>
+                                    <textarea type="text" name="message" required class="form-control bg-light border-0" rows="5"
+                                        placeholder="Message" style="resize: none !important;"></textarea>
 
                                 </div>
                                 <!-- <div class="col-12 col-sm-6">
@@ -671,9 +652,8 @@
                                 class="fa fa-angle-right me-2"></i>About Us</a>
                         <a class="text-light mb-2" href="{%url 'Services'%}"><i class="fa fa-angle-right me-2"></i>Our
                             Services</a>
-                        <a class="text-light mb-2" href="{%url 'AllJobs' %}"><i
-                                class="fa fa-angle-right me-2"></i>Careers</a>
-                        <a class="text-light mb-2" href="{%url 'Index'%}#core-values"><i class="fa fa-angle-right me-2"></i>Core
+                        <a class="text-light mb-2" href="{%url 'AllJobs' %}"><i class="fa fa-angle-right me-2"></i>Careers</a>
+                        <a class="text-light mb-2" href="#core-values"><i class="fa fa-angle-right me-2"></i>Core
                             Values</a>
                         <a class="text-light" href="{%url 'Contact' %}"><i class="fa fa-angle-right me-2"></i>Contact
                             Us</a>
@@ -703,11 +683,11 @@
                     <div class="d-flex">
                         <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
                                 class="fab fa-twitter"></i></a>
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" target="_blank" href="https://www.facebook.com/topworldhr/"><i
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
                                 class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
                                 class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" target="_blank" href="https://www.instagram.com/topworldhr"><i
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i
                                 class="fab fa-instagram"></i></a>
                     </div>
                 </div>
@@ -741,7 +721,7 @@
     <script src="{%static 'lib/tempusdominus/js/moment.min.js' %}"></script>
     <script src="{%static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
     <script src="{%static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
-    <script src="{%static 'js/bootstrap.js' %}"></script>
+    <script src="{%static 'static/js/bootstrap.js]"></script>
     <!-- Template Javascript -->
     <script src="{%static 'js/main.js' %}"></script>
     <script>

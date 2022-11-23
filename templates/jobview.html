@@ -18,6 +18,8 @@
                 <p class="text-muted mb-5">{{job.Discription}}</p>
                 <h6>Qualification: {{job.Qualification}}</h6>
                 <h6>Skills: {{job.Skills}}</h6>
+                <h6>Experiance: {{job.Experiance}}</h6>
+                <h6>Work Location: {{job.WorkLocation}}</h6>
                 <h6>Salary:{{job.Salary}}</h6>
                 <p>Work: {{job.WorkTime}}</p>
                 <p>posted on: {{job.PostedDate}}</p>
@@ -51,7 +53,7 @@
 
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="tel" pattern="[0-9]{10,14}" name="phone" required class="form-control bg-light border-1"
+                                <input type="tel" pattern="[+]{1}[0-9]{12,14}" name="phone" title="Please enter the mobile number with specific country code(uae : +971xxxxxxxxx, India : +91xxxxxxxxxx, etc..)" required class="form-control bg-light border-1"
                                     placeholder="Phone Number" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
