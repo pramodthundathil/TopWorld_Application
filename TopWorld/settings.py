@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'HrEntry.apps.HrentryConfig'
+    'HrEntry.apps.HrentryConfig',
+    
+    # 'keyboard_shortcuts',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +131,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+# START keyboard_shortcuts settings #
+# HOTKEYS = [
+#             {'keys': 'CTRL + T',  # go home
+#             'link': 'AdminHome/'},
+#         ]
+# SPECIAL_DISABLED = True
+# END keyboard_shortcuts settings #
 
 
 STATIC_URL = '/static/'
