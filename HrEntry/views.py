@@ -3,6 +3,10 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from datetime import datetime
+
 from .models import JobList,JobApplication,DropedResume,EmployersMessage
 # from django.conf import settings
 
@@ -284,6 +288,30 @@ def JobView(request,pk):
         Application = JobApplication.objects.create(Jobid = JobId,JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
+        mail_subject = 'TopWorldHR Job Application Confirmation'
+        message = render_to_string('emailbody.html', {'user': FirstName,
+                                                      "JobTitle":JobTitle,
+                                                      "date":datetime.now(),
+                                                      "phone":PhoneNumber,
+                                                      "email":EmailId
+                                                      })
+
+        email = EmailMessage(mail_subject, message, to=[EmailId])
+        email.send(fail_silently=True)
+        
+        mail_subject = 'TopWorldHR Job Application Received'
+        message = render_to_string('emailbody3.html', {'user': FirstName,
+                                                      "JobTitle":JobTitle,
+                                                      "date":datetime.now(),
+                                                      "phone":PhoneNumber,
+                                                      "email":EmailId
+                                                      })
+        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email.send(fail_silently=True)
+
+        
+        messages.info(request,"Thank you! Your job application has been sent!")
+        
         messages.info(request,"Thank you! Your job application has been sent!")
         return redirect('JobView',pk=Jobid)
         
@@ -305,6 +333,25 @@ def ApplyJob(request):
         Application = DropedResume.objects.create(JobTitle = JobTitle,FirstName = FirstName,LastName = LastName,PhoneNumber = PhoneNumber,EmailId = EmailId,Document = Doc)
         Application.save()
         
+        mail_subject = 'TopWorldHR Job Application Confirmation'
+        message = render_to_string('emailbody.html', {'user': FirstName,
+                                                      "JobTitle":JobTitle,
+                                                      "date":datetime.now()
+                                                      })
+
+        email = EmailMessage(mail_subject, message, to=[EmailId])
+        email.send(fail_silently=True)
+        
+        mail_subject = 'TopWorldHR Job Application Received'
+        message = render_to_string('emailbody3.html', {'user': FirstName,
+                                                      "JobTitle":JobTitle,
+                                                      "date":datetime.now(),
+                                                      "phone":PhoneNumber,
+                                                      "email":EmailId
+                                                      })
+        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email.send(fail_silently=True)
+        
         messages.success(request," Thank you! Your registration has been successfully completed!")
         return redirect("Index")
     
@@ -319,6 +366,15 @@ def EMessage(request):
         
         emessage = EmployersMessage.objects.create(OrganasationName=Organazation,EmailID=EmailId,PhoneNumber=Phone,Message=Message)
         emessage.save()
+        
+        emessage = EmployersMessage.objects.create(OrganasationName=Organazation,EmailID=EmailId,PhoneNumber=Phone,Message=Message)
+        emessage.save()
+        
+        mail_subject = 'TopWorldHR Enquiry Confirmation'
+        message = render_to_string('emailbody2.html')
+        email = EmailMessage(mail_subject, message, to=[EmailId])
+        email.send(fail_silently=True)
+        
         messages.success(request,"Thank you for getting in touch, we will respond with in 2 business days")
         return redirect("Index")
         
