@@ -323,8 +323,7 @@ def JobView(request,pk):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["contact@topworldhr.com",'topworldhr@gmail.com'])
-        email.attach(Doc.name, Doc.read(),Doc.content_type)
+        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
         email.send(fail_silently=True)
         
         messages.info(request,"Thank you! Your job application has been sent!")
@@ -363,8 +362,7 @@ def ApplyJob(request):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["contact@topworldhr.com",'topworldhr@gmail.com'])
-        email.attach(Doc.name, Doc.read(),Doc.content_type)
+        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
         email.send(fail_silently=True)
         
         messages.success(request," Thank you! Your registration has been successfully completed!")
