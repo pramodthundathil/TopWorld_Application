@@ -252,6 +252,23 @@ def AboutPage(request):
 
 def Contact(request):
     if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST['email']
+        sub = request.POST['sub']
+        message = request.POST['msg']
+        
+        mail_subject = 'TopWorldHR Job Contact enquiry'
+        message = render_to_string('emailbody4.html', {'name': name,
+                                                      "email":email,
+                                                      "date":datetime.now(),
+                                                      "sub":sub,
+                                                      "message":message
+                                                      })
+
+        email = EmailMessage(mail_subject, message, to=['contact@topworldhr.com','topworldhr@gmail.com'])
+        email.send(fail_silently=True)
+        
+        
         messages.info(request,"We appreciate you contacting us. One of our colleagues will get back in touch with you soon! Have a great day!")
         return redirect("Contact")
         
@@ -306,11 +323,9 @@ def JobView(request,pk):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email = EmailMessage(mail_subject, message, to=["contact@topworldhr.com",'topworldhr@gmail.com'])
+        email.attach(Doc.name, Doc.read(),Doc.content_type)
         email.send(fail_silently=True)
-
-        
-        messages.info(request,"Thank you! Your job application has been sent!")
         
         messages.info(request,"Thank you! Your job application has been sent!")
         return redirect('JobView',pk=Jobid)
@@ -341,7 +356,6 @@ def ApplyJob(request):
 
         email = EmailMessage(mail_subject, message, to=[EmailId])
         email.send(fail_silently=True)
-        
         mail_subject = 'TopWorldHR Job Application Received'
         message = render_to_string('emailbody3.html', {'user': FirstName,
                                                       "JobTitle":JobTitle,
@@ -349,7 +363,8 @@ def ApplyJob(request):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email = EmailMessage(mail_subject, message, to=["contact@topworldhr.com",'topworldhr@gmail.com'])
+        email.attach(Doc.name, Doc.read(),Doc.content_type)
         email.send(fail_silently=True)
         
         messages.success(request," Thank you! Your registration has been successfully completed!")

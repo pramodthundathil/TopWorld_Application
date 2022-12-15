@@ -53,16 +53,16 @@
                         {% csrf_token %}
                         <div class="row g-3">
                             <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control bg-light border-0" placeholder="Name" style="height: 55px;">
+                                <input type="text" name="name" class="form-control bg-light border-0" placeholder="Name" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Please enter valid email address" class="form-control bg-light border-0" placeholder="Email" style="height: 55px;">
+                                <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Please enter valid email address" class="form-control bg-light border-0" placeholder="Email" style="height: 55px;">
                             </div>
                             <div class="col-12">
-                                <input type="text" class="form-control bg-light border-0" placeholder="Subject" style="height: 55px;">
+                                <input type="text" name="sub" class="form-control bg-light border-0" placeholder="Subject" style="height: 55px;">
                             </div>
                             <div class="col-12">
-                                <textarea class="form-control bg-light border-0" rows="5" placeholder="Message" style="resize:none !important;"></textarea>
+                                <textarea class="form-control bg-light border-0" name="msg" rows="5" placeholder="Message" style="resize:none !important;"></textarea>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
