@@ -323,7 +323,7 @@ def JobView(request,pk):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email = EmailMessage(mail_subject, message, to=['contact@topworldhr.com','topworldhr@gmail.com'])
         email.send(fail_silently=True)
         
         messages.info(request,"Thank you! Your job application has been sent!")
@@ -362,7 +362,7 @@ def ApplyJob(request):
                                                       "phone":PhoneNumber,
                                                       "email":EmailId
                                                       })
-        email = EmailMessage(mail_subject, message, to=["gopinath.pramod@gmail.com"])
+        email = EmailMessage(mail_subject, message, to=['contact@topworldhr.com','topworldhr@gmail.com'])
         email.send(fail_silently=True)
         
         messages.success(request," Thank you! Your registration has been successfully completed!")
@@ -395,8 +395,7 @@ def EMessage(request):
        
     # we add the path to the the 404.html file
     # here. The name of our HTML file is 404.html
-    # return render(request, '404.html')
-        
+    # return render(request, '404.html)
 
 
 
